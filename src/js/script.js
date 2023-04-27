@@ -110,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function openModal() {
     modalContent.classList.add('show');
-      modalContent.classList.remove('hide');
+    modalContent.classList.remove('hide');
     document.body.style.overflow = 'hidden'; //for scroll
     clearInterval(modalTimerId);
   }
@@ -134,7 +134,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const modalTimerId = setTimeout(openModal, 50000); 
+  const modalTimerId = setTimeout(openModal, 50000);
 
   function showModalByScroll() {
     if (window.pageXOffset + document.documentElement.clientHeight >= document.
@@ -247,35 +247,34 @@ window.addEventListener('DOMContentLoaded', () => {
       display: block;
       margin: 0 auto;
       `;
-      //form.append(statusMessage);
+
       form.insertAdjacentElement('afterend', statusMessage);//чтобы было внизу
 
-      const request = new XMLHttpRequest();
-      request.open('POST', "js/server.php");
-
-     // request.setRequestHeader('Content-type', 'application/json');
       const formData = new FormData(form);
+      /* 
+            const object = {};
+            formData.forEach(function(value, key){
+              object[key] = value; 
+            });
+            
+            const json = JSON.stringify(object); */
 
-     /*  const object = {};
-      formData.forEach(function(value, key){
-        object[key] = value; 
-      });
-      
-      const json = JSON.stringify(object);
- */
-      request.send(formData);
-
-      request.addEventListener('load', () => {
-        if (request.status === 200) {
-          console.log(request.response);
+      fetch('js/server.php', {
+        method: 'POST',
+        /*    headers: {
+             'Content-type': 'application/json'
+           }, */
+        body: formData
+      }).then(data =>data.text())
+        .then(data => {
+          console.log(data);
           showThanksModal(message.success);
-          form.reset();
           statusMessage.remove();
-        } else {
+        }).catch(() => {
           showThanksModal(message.failure);
-        }
-      });
-
+        }).finally(() => {
+          form.reset();
+        });
     });
   }
 
@@ -302,4 +301,20 @@ window.addEventListener('DOMContentLoaded', () => {
       closeModal();
     }, 5000);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
