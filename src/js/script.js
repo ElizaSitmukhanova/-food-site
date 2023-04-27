@@ -251,21 +251,19 @@ window.addEventListener('DOMContentLoaded', () => {
       form.insertAdjacentElement('afterend', statusMessage);//чтобы было внизу
 
       const formData = new FormData(form);
-      /* 
-            const object = {};
-            formData.forEach(function(value, key){
-              object[key] = value; 
-            });
-            
-            const json = JSON.stringify(object); */
 
-      fetch('js/server.php', {
+      const object = {};
+      formData.forEach(function (value, key) {
+        object[key] = value;
+      });
+
+      fetch('j/server.php', {
         method: 'POST',
-        /*    headers: {
-             'Content-type': 'application/json'
-           }, */
-        body: formData
-      }).then(data =>data.text())
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(object)
+      }).then(data => data.text())
         .then(data => {
           console.log(data);
           showThanksModal(message.success);
@@ -302,19 +300,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
+
+
