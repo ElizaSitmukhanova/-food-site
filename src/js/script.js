@@ -252,17 +252,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const formData = new FormData(form);
 
-      const object = {};
+      /* const object = {};
       formData.forEach(function (value, key) {
         object[key] = value;
-      });
+      }); */
 
-      fetch('j/server.php', {
+      fetch('js/server.php', {
         method: 'POST',
-        headers: {
+       /*  headers: {
           'Content-type': 'application/json'
-        },
-        body: JSON.stringify(object)
+        }, */
+        body: formData //JSON.stringify(object)
       }).then(data => data.text())
         .then(data => {
           console.log(data);
@@ -300,6 +300,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   }
 
+  
+  fetch('http://localhost:3000/menu')
+  .then(data => data.json())
+  .then(res => console.log(res));
 });
 
 
