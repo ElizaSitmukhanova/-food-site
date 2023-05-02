@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   hideTabContent();
   showTabConent();
-  
+
   // Timer
 
   const deadline = '2024-03-21';
@@ -282,9 +282,51 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   }
 
-  
-  fetch('http://localhost:3000/menu')
-  .then(data => data.json())
-  .then(res => console.log(res));
+//slider
+  const slides = document.querySelectorAll('.offer__slide'),
+        prevBtn = document.querySelector('.offer__slider-prev'),
+        nextBtn = document.querySelector('.offer__slider-next'),
+        current = document.querySelector('#current'),
+        total = document.querySelector('#total');
+
+let slideIndex = 1;
+
+showSlides(slideIndex);
+
+total.textContent = getZero(slides.length);
+
+  function showSlides(n) {
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+    slides.forEach((slide) => {
+      slide.classList.add('hide');
+      slide.classList.remove('show', 'fide');
+    });
+    slides[slideIndex - 1].classList.add('show', 'fade');
+    slides[slideIndex - 1].classList.remove('hide');
+    
+
+    current.textContent = getZero(slideIndex);
+  }
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+
+}
+
+prevBtn.addEventListener('click', () => {
+  plusSlides(-1);
+ 
+});
+
+nextBtn.addEventListener('click', () => {
+  plusSlides(1);
+ 
+});
+
 });
 
